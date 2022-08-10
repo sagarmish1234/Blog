@@ -38,7 +38,7 @@ public class LoginController {
             return ResponseEntity.ok(obj);
         }
         catch (Exception e){
-            e.printStackTrace();
+//            e.printStackTrace();
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponsePOJO(e.getMessage()));
         }
     }
@@ -53,5 +53,5 @@ public class LoginController {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
     }
-    
+
 }

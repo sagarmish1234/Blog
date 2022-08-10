@@ -24,7 +24,7 @@ public class RegisterController {
                 throw new Exception("User Already exists");
             return ResponseEntity.ok(userService.saveUser(userEntity));
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
