@@ -69,6 +69,10 @@ public class ArticleService {
         throw new Exception("No article found");
     }
 
+    public ArticleEntity saveArticle(ArticleEntity articleEntity) throws Exception{
+        return articleRepository.save(articleEntity);
+    }
+
 
 
 

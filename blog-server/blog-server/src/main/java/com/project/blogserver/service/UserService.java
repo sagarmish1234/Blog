@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -21,6 +22,7 @@ public class UserService implements UserDetailsService {
 
     @Autowired
     private UserRepository userRepository;
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         Optional<UserEntity> user = userRepository.findByEmail(username);
@@ -36,6 +38,10 @@ public class UserService implements UserDetailsService {
             return user.get();
         }
         throw new UsernameNotFoundException("User not found");
+    }
+
+    public Optional<UserEntity> loadUserByEmail(String email){
+        return userRepository.findByEmail(email);
     }
 
     public List<UserEntity> loadUsersByName(String name) throws Exception{
@@ -58,7 +64,6 @@ public class UserService implements UserDetailsService {
     public UserEntity updateUserById(Long id, UserEntity newUserEntity) throws Exception{
         UserEntity userEntity = this.loadUserById(id);
         userEntity.setArticles(newUserEntity.getArticles());
-        userEntity.setCreatedAt(newUserEntity.getCreatedAt());
         userEntity.setFullName(newUserEntity.getFullName());
         userEntity.setPassword(newUserEntity.getPassword());
         userEntity.setPhone(newUserEntity.getPhone());
@@ -71,9 +76,8 @@ public class UserService implements UserDetailsService {
         Optional<UserEntity> userEntity = userRepository.findByEmail(username);
         if(userEntity.isPresent()){
             userEntity.get().setArticles(newUserEntity.getArticles());
-            userEntity.get().setCreatedAt(newUserEntity.getCreatedAt());
             userEntity.get().setFullName(newUserEntity.getFullName());
-            userEntity.get().setPassword(newUserEntity.getPassword());
+            userEntity.get().setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
             userEntity.get().setPhone(newUserEntity.getPhone());
             userEntity.get().setEmail(newUserEntity.getEmail());
             userEntity.get().setRole(newUserEntity.getRole());
