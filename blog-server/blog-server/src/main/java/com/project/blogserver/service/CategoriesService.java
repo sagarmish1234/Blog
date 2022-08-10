@@ -22,6 +22,10 @@ public class CategoriesService {
         throw  new Exception("No category found");
     }
 
+    public CategoryEntity saveCategory(CategoryEntity categoryEntity){
+        return categoryRepository.save(categoryEntity);
+    }
+
     public List<CategoryEntity> loadCategoriesByName(String name) throws Exception{
         Optional<List<CategoryEntity>> categories = categoryRepository.findByNameIgnoreCaseContaining(name);
         if(categories.isPresent() && !(categories.get().isEmpty())){
@@ -29,7 +33,9 @@ public class CategoriesService {
         }
         throw  new Exception("No categories found");
     }
-
+    public List<CategoryEntity> loadAllCategories() throws Exception{
+        return categoryRepository.findAll();
+    }
     public void deleteCategoryById(Long id){
         categoryRepository.deleteById(id);
     }
