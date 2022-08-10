@@ -55,8 +55,8 @@ public class UserService implements UserDetailsService {
         userRepository.deleteById(id);
     }
 
-    public void updateUserById(UserEntity newUserEntity){
-        UserEntity userEntity = this.loadUserById(newUserEntity.getId());
+    public UserEntity updateUserById(Long id, UserEntity newUserEntity) throws Exception{
+        UserEntity userEntity = this.loadUserById(id);
         userEntity.setArticles(newUserEntity.getArticles());
         userEntity.setCreatedAt(newUserEntity.getCreatedAt());
         userEntity.setFullName(newUserEntity.getFullName());
@@ -64,5 +64,23 @@ public class UserService implements UserDetailsService {
         userEntity.setPhone(newUserEntity.getPhone());
         userEntity.setEmail(newUserEntity.getEmail());
         userEntity.setRole(newUserEntity.getRole());
+        return userEntity;
     }
+
+    public UserEntity updateUserByUsername(String username,UserEntity newUserEntity) throws Exception{
+        Optional<UserEntity> userEntity = userRepository.findByEmail(username);
+        if(userEntity.isPresent()){
+            userEntity.get().setArticles(newUserEntity.getArticles());
+            userEntity.get().setCreatedAt(newUserEntity.getCreatedAt());
+            userEntity.get().setFullName(newUserEntity.getFullName());
+            userEntity.get().setPassword(newUserEntity.getPassword());
+            userEntity.get().setPhone(newUserEntity.getPhone());
+            userEntity.get().setEmail(newUserEntity.getEmail());
+            userEntity.get().setRole(newUserEntity.getRole());
+            return userEntity.get();
+        }
+        throw new Exception("No user found");
+
+    }
+
 }
