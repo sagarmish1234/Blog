@@ -7,7 +7,7 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
+import java.util.HashSet;
 
 @Entity
 @Getter
@@ -19,7 +19,7 @@ public class ArticleEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    @ManyToOne(targetEntity = UserEntity.class)
+    @ManyToOne(fetch = FetchType.EAGER)
     private UserEntity author;
 
     private String title;
@@ -27,9 +27,9 @@ public class ArticleEntity {
     private String story;
     private Date createdAt;
     private Date updatedAt;
-    private Long views;
+    private HashSet<Long> views;
 
-    @ManyToOne
-    private CategoryEntity categories;
+    @ManyToOne(fetch = FetchType.EAGER)
+    private CategoryEntity category;
 
 }

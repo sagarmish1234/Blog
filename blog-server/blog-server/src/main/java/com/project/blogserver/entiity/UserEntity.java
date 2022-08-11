@@ -1,10 +1,15 @@
 package com.project.blogserver.entiity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Getter
@@ -22,7 +27,4 @@ public class UserEntity {
     private String phone;
     private Date createdAt;
     private String role;
-
-    @OneToMany(cascade = CascadeType.ALL)
-    private List<ArticleEntity> articles;
 }

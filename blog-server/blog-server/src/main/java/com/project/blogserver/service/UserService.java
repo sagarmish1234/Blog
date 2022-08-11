@@ -54,6 +54,7 @@ public class UserService implements UserDetailsService {
 
     public UserEntity saveUser(UserEntity user) {
         user.setCreatedAt(new Date());
+        user.setRole("User");
         return userRepository.save(user);
     }
 
@@ -63,7 +64,6 @@ public class UserService implements UserDetailsService {
 
     public UserEntity updateUserById(Long id, UserEntity newUserEntity) throws Exception{
         UserEntity userEntity = this.loadUserById(id);
-        userEntity.setArticles(newUserEntity.getArticles());
         userEntity.setFullName(newUserEntity.getFullName());
         userEntity.setPassword(newUserEntity.getPassword());
         userEntity.setPhone(newUserEntity.getPhone());
@@ -75,7 +75,6 @@ public class UserService implements UserDetailsService {
     public UserEntity updateUserByUsername(String username,UserEntity newUserEntity) throws Exception{
         Optional<UserEntity> userEntity = userRepository.findByEmail(username);
         if(userEntity.isPresent()){
-            userEntity.get().setArticles(newUserEntity.getArticles());
             userEntity.get().setFullName(newUserEntity.getFullName());
             userEntity.get().setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
             userEntity.get().setPhone(newUserEntity.getPhone());

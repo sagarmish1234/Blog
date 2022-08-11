@@ -31,16 +31,18 @@ public class BlogServerApplication {
 
     @PostConstruct
     public void users() {
-        ArrayList<UserEntity> arr = new ArrayList<>();
-        UserEntity primeUser = new UserEntity(1L, "Sagar Mishra", "sagarmish1234@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632419", new Date(), "Admin", null);
-        userRepository.save(primeUser);
+        ArrayList<UserEntity> arr = new ArrayList<>(Arrays.asList(
+                new UserEntity(null, "Sagar Mishra", "sagarmish1234@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632419", new Date(), "Admin")
+                , new UserEntity(null, "Sagar M", "sagarmish1235@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632420", new Date(), "User")
+        ));
+        userRepository.saveAll(arr);
     }
 
     @PostConstruct
     public void categories() {
         ArrayList<CategoryEntity> arr = new ArrayList<>(Arrays.asList(
-                new CategoryEntity(1L, "Food and Drinks", null)
-                , new CategoryEntity(2L, "Tourism", null)
+                new CategoryEntity(null, "Food and Drinks")
+                , new CategoryEntity(null, "Tourism")
         ));
         categoryRepository.saveAll(arr);
     }
