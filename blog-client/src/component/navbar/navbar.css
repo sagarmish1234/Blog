@@ -1,0 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
+
+
+.navbarContainer {
+  position: fixed;
+  top: 0;
+  background-color: white;
+  margin-top: 15px;
+  width: 95%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  border-radius: 7px;
+  height: 70px;
+}
+
+.navbarBrand{
+    display: flex;
+    height: 100%;
+    align-items: center;
+    margin-left: 20px;
+    /* justify-content: center; */
+}
+.navbarBrandLogo{
+    width: 80px;
+    height: 100%;
+}
+
+.navbarBrandTitle{
+    font-family: 'Playfair Display', serif;
+    font-size: 2rem;
+}
