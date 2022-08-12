@@ -5,6 +5,7 @@ function Home() {
   return (
     <div className='homeContainer'>
             <img src={Image} className="homePageImage" />
+            <div className="darkend-image"></div>
     </div>
   )
 }
