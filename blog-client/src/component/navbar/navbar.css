@@ -1,5 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&display=swap');
-
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@500&display=swap');
 
 .navbarContainer {
   position: fixed;
@@ -48,7 +48,12 @@
     height: 30px;
     border-radius: 7px 0px 0px 7px;
     padding-left: 20px;
+    font-family: 'Dosis', sans-serif;
+    font-size: 1.05rem;
+}
 
+.navbarSearchBox::placeholder{
+    font-family: 'Dosis', sans-serif;
 }
 
 .navbarSearchBox:focus{

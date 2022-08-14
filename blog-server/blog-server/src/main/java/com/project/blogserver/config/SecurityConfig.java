@@ -33,10 +33,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
-                .cors().disable()
+                .cors()
+                .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/user/login","/api/user/register","/h2-console/**","/api/article/**","/api/categories/**").permitAll()
+                .antMatchers("/api/user/login", "/api/user/register", "/h2-console/**", "/api/article/**", "/api/categories/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
@@ -44,8 +45,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.headers().frameOptions().disable();
     }
 
+
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
