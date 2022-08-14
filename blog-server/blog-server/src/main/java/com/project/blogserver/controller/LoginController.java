@@ -40,7 +40,8 @@ public class LoginController {
         }
         catch (Exception e){
 //            e.printStackTrace();
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new ResponsePOJO(e.getMessage()));
+            System.out.println(loginRequest);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
         }
     }
 

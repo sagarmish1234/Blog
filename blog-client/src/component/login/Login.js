@@ -7,10 +7,10 @@ import VisibilityOffSharp from "@mui/icons-material/VisibilityOffSharp";
 import ArrowBackSharp from "@mui/icons-material/ArrowBackSharp";
 import { ShowLogin, ShowSignup } from "../../App";
 import { motion } from "framer-motion";
-import { fontWeight } from "@mui/system";
 import FormError from "../formError/FormError";
 import { HashLoader } from "react-spinners";
 import baseUrl from "../../config/BaseUrl";
+import axios from "axios";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
@@ -36,18 +36,14 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    const temp = await fetch(`${baseUrl}/user/login`, {
-      method: "POST",
-      headers: { "content-type": "application/json" },
-      body: JSON.stringify(userForm),
-    });
-    const response = await temp.json();
-    if (temp.status === 200) {
+    try{
+      const response = await axios.post(`${baseUrl}/user/login`, userForm);
       setShowLogin(false);
       setLoading(false);
-    } else {
-      setMessage(response.message);
-      setTheme("loginError")
+    }
+    catch({response}) {
+      setMessage(response.data.message);
+      setTheme("loginError");
       setShowError(true);
       setLoading(false);
     }

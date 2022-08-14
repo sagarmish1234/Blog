@@ -69,6 +69,7 @@ public class UserService implements UserDetailsService {
         userEntity.setPhone(newUserEntity.getPhone());
         userEntity.setEmail(newUserEntity.getEmail());
         userEntity.setRole(newUserEntity.getRole());
+        userEntity.setImage(newUserEntity.getImage());
         return userEntity;
     }
 

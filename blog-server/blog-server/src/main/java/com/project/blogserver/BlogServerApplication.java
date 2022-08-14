@@ -32,8 +32,8 @@ public class BlogServerApplication {
     @PostConstruct
     public void users() {
         ArrayList<UserEntity> arr = new ArrayList<>(Arrays.asList(
-                new UserEntity(null, "Sagar Mishra", "sagarmish1234@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632419", new Date(), "Admin")
-                , new UserEntity(null, "Sagar M", "sagarmish1235@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632420", new Date(), "User")
+                new UserEntity(null,null, "Sagar Mishra", "sagarmish1234@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632419", new Date(), "Admin")
+                , new UserEntity(null,null, "Sagar M", "sagarmish1235@gmail.com", new BCryptPasswordEncoder().encode("sagar"), "6290632420", new Date(), "User")
         ));
         userRepository.saveAll(arr);
     }
