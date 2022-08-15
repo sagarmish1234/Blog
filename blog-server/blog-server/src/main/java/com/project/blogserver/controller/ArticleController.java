@@ -80,4 +80,14 @@ public class ArticleController {
         }
     }
 
+    @GetMapping("/getEditorPics")
+    public ResponseEntity<?> getEditorPics(){
+        try{
+            List<ArticleEntity> articleEntities = articleService.loadEditorPicks();
+            return ResponseEntity.ok(articleEntities);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
+        }
+    }
+
 }

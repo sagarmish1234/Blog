@@ -9,10 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.Date;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -62,6 +59,7 @@ public class ArticleService {
             articleEntity.get().setImage(newArticle.getImage());
             articleEntity.get().setStory(newArticle.getStory());
             articleEntity.get().setTitle(newArticle.getTitle());
+            articleEntity.get().setWordCount((long) newArticle.getStory().split(" ").length);
             return articleEntity.get();
         }
         throw new Exception("No article found");
@@ -91,6 +89,7 @@ public class ArticleService {
         articleEntity.setCreatedAt(new Date());
         articleEntity.setViews(new HashSet<>());
         articleEntity.setCategory(category);
+        articleEntity.setWordCount((long) articleEntity.getStory().split(" ").length);
         return articleRepository.save(articleEntity);
     }
 
@@ -102,6 +101,15 @@ public class ArticleService {
         if(articles.isEmpty())
             throw new Exception("No articles found");
         return articles;
+    }
+
+    public List<ArticleEntity> loadEditorPicks() throws Exception{
+        List<ArticleEntity> pics = articleRepository.findAll();
+        if(!pics.isEmpty()){
+            Collections.shuffle(pics);
+            return pics.subList(0,4);
+        }
+        throw new Exception("No articles found");
     }
 
 

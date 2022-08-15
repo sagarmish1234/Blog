@@ -1,18 +1,15 @@
 package com.project.blogserver.entiity;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 
 @Entity
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
+
 @AllArgsConstructor
 public class ArticleEntity {
     @Id
@@ -24,6 +21,8 @@ public class ArticleEntity {
 
     private String title;
     private  String image;
+
+    private Long wordCount;
     private String story;
     private Date createdAt;
     private Date updatedAt;

@@ -172,7 +172,7 @@ function Signup() {
             </div>
             <div className="signupFormInput">
               <input
-                type="text"
+                type="telephone"
                 name="phone"
                 className="signupInput"
                 placeholder="Phone"
