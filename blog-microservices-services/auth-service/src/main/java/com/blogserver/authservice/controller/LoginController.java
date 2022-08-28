@@ -30,33 +30,35 @@ public class LoginController {
 
     @Autowired
     UserService userService;
+
+    //    @GetMapping("/hello")
+//    public  ResponseEntity<?> hello(){
+//        return ResponseEntity.ok("Hello");
+//    }
+//
     @PostMapping("/login")
-    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest){
-        try{
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(),loginRequest.getPassword()));
+    public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
             String token = jwtUtil.generateToken(userDetails);
-            HashMap<String,String> obj = new HashMap<>();
-            obj.put("token",token);
+            HashMap<String, String> obj = new HashMap<>();
+            obj.put("token", token);
             return ResponseEntity.ok(obj);
-        }
-        catch (Exception e){
+        } catch (Exception e) {
             System.out.println(loginRequest);
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
         }
     }
 
     @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UserEntity userEntity){
-        try{
+    public ResponseEntity<?> update(@RequestBody UserEntity userEntity) {
+        try {
             UserEntity user = userService.updateUserByUsername(userEntity.getEmail(), userEntity);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
     }
-
-
-
 
 }
