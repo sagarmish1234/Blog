@@ -31,11 +31,6 @@ public class LoginController {
     @Autowired
     UserService userService;
 
-    //    @GetMapping("/hello")
-//    public  ResponseEntity<?> hello(){
-//        return ResponseEntity.ok("Hello");
-//    }
-//
     @PostMapping("/login")
     public ResponseEntity<?> login(@RequestBody LoginRequest loginRequest) {
         try {
@@ -51,14 +46,6 @@ public class LoginController {
         }
     }
 
-    @PostMapping("/update")
-    public ResponseEntity<?> update(@RequestBody UserEntity userEntity) {
-        try {
-            UserEntity user = userService.updateUserByUsername(userEntity.getEmail(), userEntity);
-            return ResponseEntity.ok(user);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
-        }
-    }
+
 
 }

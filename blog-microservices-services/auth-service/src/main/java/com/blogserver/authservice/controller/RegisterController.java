@@ -11,8 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Optional;
-
 @RestController
 @RequestMapping("/user")
 public class RegisterController {
@@ -26,14 +24,11 @@ public class RegisterController {
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody UserEntity userEntity) {
         try {
-            Optional<UserEntity> user = userService.loadUserByEmail(userEntity.getEmail());
-            if (user.isPresent())
-                throw new Exception("User Already exists");
+            UserEntity user = userService.loadUserByEmail(userEntity.getEmail());
+            return ResponseEntity.status(400).body(new ResponsePOJO("User already exits"));
+        } catch (Exception e) {
             userEntity.setPassword(passwordEncoder.encode(userEntity.getPassword()));
             return ResponseEntity.ok(userService.saveUser(userEntity));
-        } catch (Exception e) {
-//            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
     }
 }
