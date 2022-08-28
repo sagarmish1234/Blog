@@ -63,33 +63,33 @@ public class UserService implements UserDetailsService {
         return userRepository.save(user);
     }
 
-    public void deleteUserById(Long id){
+    public void deleteUserById(Long id) throws Exception{
+        UserEntity user = this.loadUserById(id);
         userRepository.deleteById(id);
     }
 
     public UserEntity updateUserById(Long id, UserEntity newUserEntity) throws Exception{
         UserEntity userEntity = this.loadUserById(id);
+        if(!userEntity.getEmail().equals(newUserEntity.getEmail()))
+            throw new Exception("Not authorized to update");
         userEntity.setFullName(newUserEntity.getFullName());
         userEntity.setPassword(newUserEntity.getPassword());
         userEntity.setPhone(newUserEntity.getPhone());
-        userEntity.setEmail(newUserEntity.getEmail());
-        userEntity.setRole(newUserEntity.getRole());
         userEntity.setImage(newUserEntity.getImage());
         return userEntity;
     }
 
     public UserEntity updateUserByUsername(String username,UserEntity newUserEntity) throws Exception{
         Optional<UserEntity> userEntity = userRepository.findByEmail(username);
-        if(userEntity.isPresent()){
-            userEntity.get().setFullName(newUserEntity.getFullName());
-            userEntity.get().setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
-            userEntity.get().setPhone(newUserEntity.getPhone());
-            userEntity.get().setEmail(newUserEntity.getEmail());
-            userEntity.get().setRole(newUserEntity.getRole());
-            return userEntity.get();
-        }
-        throw new Exception("No user found");
-
+        if(!userEntity.isPresent())
+            throw new Exception("No user found");
+        if(!userEntity.get().getEmail().equals(newUserEntity.getEmail()))
+            throw new Exception("Not authorized to update");
+        userEntity.get().setFullName(newUserEntity.getFullName());
+        userEntity.get().setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
+        userEntity.get().setPhone(newUserEntity.getPhone());
+        userEntity.get().setImage(newUserEntity.getImage());
+        return userEntity.get();
     }
 
 }
