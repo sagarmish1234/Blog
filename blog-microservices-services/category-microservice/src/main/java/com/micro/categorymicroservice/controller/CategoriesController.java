@@ -56,5 +56,24 @@ public class CategoriesController {
         }
     }
 
+    @DeleteMapping("/deleteCategory/{categoryId}")
+    public ResponseEntity<?> deleteCategory(@pathVariable Long categoryId) {
+        try {
+            categoriesService.deleteCategoryById(id);
+            return new ResponseEntity<>(id, HttpStatus.ok);
+        } catch (Exception e) {
+            return ResponseEntity.Status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
+        }
+    }
+
+    @PutMapping("/updateCategory/{categoryId}/{name}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long categoryId, @PathVariable String name) {
+        try {
+            categoriesService.updateCategoryById(categoryId, name);
+            return new ResponseEntity<>(id, HttpStatus.ok);
+        } catch (Exception e) {
+            return new ResponseEntity,status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
+        }
+    }
 
 }
