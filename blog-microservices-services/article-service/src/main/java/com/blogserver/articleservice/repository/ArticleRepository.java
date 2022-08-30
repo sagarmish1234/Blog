@@ -12,4 +12,6 @@ import java.util.Optional;
 public interface ArticleRepository extends JpaRepository<ArticleEntity,Long> {
 
     Optional<List<ArticleEntity>> findByTitleIgnoreCaseContaining(String title);
+
+    Optional<List<ArticleEntity>> findByTitleIgnoreCaseStartingWith(String name);
 }
