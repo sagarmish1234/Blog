@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -55,7 +56,7 @@ public class UserController {
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             e.getStackTrace();
-            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
+            return ResponseEntity.status(200).body(new ArrayList<UserEntity>());
         }
     }
 

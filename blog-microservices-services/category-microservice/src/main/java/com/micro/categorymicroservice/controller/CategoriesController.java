@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -53,7 +54,7 @@ public class CategoriesController {
             List<CategoryEntity> categoryEntities = categoriesService.getCategoriesStartingWith(name);
             return ResponseEntity.ok(categoryEntities);
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
+            return ResponseEntity.ok(new ArrayList<CategoryEntity>());
         }
     }
 

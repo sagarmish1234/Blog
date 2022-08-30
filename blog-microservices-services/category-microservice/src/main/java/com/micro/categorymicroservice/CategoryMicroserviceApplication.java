@@ -27,7 +27,7 @@ public class CategoryMicroserviceApplication {
     @PostConstruct
     public void categories() {
         List<CategoryEntity> categoryEntityList = Arrays.asList(new CategoryEntity(null, "Food"),
-                new CategoryEntity(null, "Travel"));
+                new CategoryEntity(null, "Travel"), new CategoryEntity(null, "Space"));
         categoryRepository.saveAll(categoryEntityList);
     }
 }
