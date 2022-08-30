@@ -78,5 +78,4 @@ public class UserController {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
     }
-
 }
