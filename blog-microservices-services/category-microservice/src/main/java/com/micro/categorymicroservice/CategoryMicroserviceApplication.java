@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
 @EnableEurekaClient
+@EnableTransactionManagement
 public class CategoryMicroserviceApplication {
 
 	public static void main(String[] args) {

@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 public class CategoriesService {
 
     @Autowired
@@ -40,7 +41,11 @@ public class CategoriesService {
     }
 
     public void deleteCategoryById(Long id) {
-        categoryRepository.deleteById(id);
+        Optional<CategoryEntity> category = categoryRepository.findById(id);
+        if(category.isPresent()) {
+            categoryRepository.deleteById(category.id);
+        }
+        throw new Exception("No categories found");
     }
 
     public HashMap<Long, String> getAllCategoriesNameAndId() throws Exception {
@@ -52,7 +57,14 @@ public class CategoriesService {
             map.put(i.getId(), i.getName());
         }
         return map;
-
-
     }
+
+    public void updateCategoryById(Long id, String name) {
+        Optional<CategoryEntity> category = categoryRepository.findById(id);
+        if(category.isPresent()) {
+            category.setName(name);
+        }
+        throw new Exception("No category found.");
+    }
+
 }
