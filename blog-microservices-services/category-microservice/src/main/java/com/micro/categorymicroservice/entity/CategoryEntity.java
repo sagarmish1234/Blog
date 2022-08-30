@@ -1,4 +1,4 @@
-package com.project.blogserver.entiity;
+package com.micro.categorymicroservice.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

@@ -1,11 +1,11 @@
-package com.project.blogserver.service;
+package com.micro.categorymicroservice.service;
 
-import com.project.blogserver.entiity.CategoryEntity;
-import com.project.blogserver.repository.CategoryRepository;
+import com.micro.categorymicroservice.entity.CategoryEntity;
+import com.micro.categorymicroservice.repository.CategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
+import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
@@ -40,31 +40,32 @@ public class CategoriesService {
         return categoryRepository.findAll();
     }
 
-    public void deleteCategoryById(Long id) {
+    public void deleteCategoryById(Long id) throws Exception {
         Optional<CategoryEntity> category = categoryRepository.findById(id);
-        if(category.isPresent()) {
-            categoryRepository.deleteById(category.id);
+        if (!category.isPresent()) {
+            throw new Exception("No category found");
         }
-        throw new Exception("No categories found");
+        categoryRepository.deleteById(id);
     }
 
-    public HashMap<Long, String> getAllCategoriesNameAndId() throws Exception {
-        List<CategoryEntity> categories = categoryRepository.findAll();
-        if (categories.isEmpty())
-            throw new Exception("No categories found");
-        HashMap<Long, String> map = new HashMap<>();
-        for (CategoryEntity i : categories) {
-            map.put(i.getId(), i.getName());
-        }
-        return map;
-    }
+//    public HashMap<Long, String> getAllCategoriesNameAndId() throws Exception {
+//        List<CategoryEntity> categories = categoryRepository.findAll();
+//        if (categories.isEmpty())
+//            throw new Exception("No categories found");
+//        HashMap<Long, String> map = new HashMap<>();
+//        for (CategoryEntity i : categories) {
+//            map.put(i.getId(), i.getName());
+//        }
+//        return map;
+//    }
 
-    public void updateCategoryById(Long id, String name) {
-        Optional<CategoryEntity> category = categoryRepository.findById(id);
-        if(category.isPresent()) {
-            category.setName(name);
+    public CategoryEntity updateCategoryById(Long id, String name) throws Exception {
+        Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);
+        if (!categoryEntity.isPresent()) {
+            throw new Exception("No category found.");
         }
-        throw new Exception("No category found.");
+        categoryEntity.get().setName(name);
+        return categoryEntity.get();
     }
 
 }

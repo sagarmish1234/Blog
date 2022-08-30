@@ -1,42 +1,66 @@
-package com.project.blogserver.controller;
+package com.micro.categorymicroservice.controller;
 
-import com.project.blogserver.POJO.ResponsePOJO;
-import com.project.blogserver.entiity.ArticleEntity;
-import com.project.blogserver.entiity.CategoryEntity;
-import com.project.blogserver.service.ArticleService;
-import com.project.blogserver.service.CategoriesService;
+import com.micro.categorymicroservice.POJO.ResponsePOJO;
+import com.micro.categorymicroservice.entity.CategoryEntity;
+import com.micro.categorymicroservice.service.CategoriesService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/categories")
+@RequestMapping("/category")
 public class CategoriesController {
 
     @Autowired
     CategoriesService categoriesService;
 
-    @Autowired
-    ArticleService articleService;
-
     @GetMapping("/getAll")
     public ResponseEntity<?> getAll() {
         try {
-            HashMap<Long, String> categoryEntities = categoriesService.getAllCategoriesNameAndId();
-            if (categoryEntities.size() == 0)
-                throw new Exception("No categories found");
-            return ResponseEntity.ok(categoryEntities);
+            List<CategoryEntity> categories = categoriesService.loadAllCategories();
+            return ResponseEntity.ok(categories);
         } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
+            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
         }
     }
 
-    @PostMapping("/addCategory")
+    @GetMapping("/getByName/{name}")
+    public ResponseEntity<?> getByName(@PathVariable String name) {
+        try {
+            List<CategoryEntity> categoryEntities = categoriesService.loadCategoriesByName(name);
+            return ResponseEntity.ok(categoryEntities);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
+        }
+
+    }
+
+    @GetMapping("/getById/{id}")
+    public ResponseEntity<?> getById(@PathVariable Long id){
+        try {
+            CategoryEntity category = categoriesService.loadCategoryById(id);
+            return ResponseEntity.ok(category);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
+        }
+    }
+//    @GetMapping("/getAllNameAndId")
+//    public ResponseEntity<?> getAllNameAndId() {
+//        try {
+//            HashMap<Long, String> categoryEntities = categoriesService.getAllCategoriesNameAndId();
+//            if (categoryEntities.size() == 0)
+//                throw new Exception("No categories found");
+//            return ResponseEntity.ok(categoryEntities);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
+//        }
+//    }
+
+    @PostMapping("/add")
     public ResponseEntity<?> addCategory(@RequestBody CategoryEntity categoryEntity) {
         try {
             return ResponseEntity.ok(categoriesService.saveCategory(categoryEntity));
@@ -45,34 +69,23 @@ public class CategoriesController {
         }
     }
 
-    @GetMapping("/getCategoryItems/{categoryId}")
-    public ResponseEntity<?> getCategoryItems(@PathVariable Long categoryId) {
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         try {
-            List<ArticleEntity> articleEntities = articleService.loadArticlesByCategoryId(categoryId);
-            return ResponseEntity.ok(articleEntities);
-
+            categoriesService.deleteCategoryById(id);
+            return ResponseEntity.ok("The category with id " + id + " is deleted");
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
         }
     }
 
-    @DeleteMapping("/deleteCategory/{categoryId}")
-    public ResponseEntity<?> deleteCategory(@pathVariable Long categoryId) {
+    @PutMapping("/update/{id}/{name}")
+    public ResponseEntity<?> updateCategory(@PathVariable Long id, @PathVariable String name) {
         try {
-            categoriesService.deleteCategoryById(id);
-            return new ResponseEntity<>(id, HttpStatus.ok);
+            CategoryEntity categoryEntity = categoriesService.updateCategoryById(id, name);
+            return ResponseEntity.ok(categoryEntity);
         } catch (Exception e) {
-            return ResponseEntity.Status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
-        }
-    }
-
-    @PutMapping("/updateCategory/{categoryId}/{name}")
-    public ResponseEntity<?> updateCategory(@PathVariable Long categoryId, @PathVariable String name) {
-        try {
-            categoriesService.updateCategoryById(categoryId, name);
-            return new ResponseEntity<>(id, HttpStatus.ok);
-        } catch (Exception e) {
-            return new ResponseEntity,status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ResponsePOJO(e.getMessage()));
         }
     }
 
