@@ -48,10 +48,10 @@ public class UserController {
         }
     }
 
-    @GetMapping("/getByName/{name}")
+    @GetMapping("/getByStaringName/{name}")
     public ResponseEntity<?> getUsersByName(@PathVariable String name) {
         try {
-            List<UserEntity> user = userService.loadUsersByName(name);
+            List<UserEntity> user = userService.loadUsersStartingWith(name);
             return ResponseEntity.ok(user);
         } catch (Exception e) {
             e.getStackTrace();

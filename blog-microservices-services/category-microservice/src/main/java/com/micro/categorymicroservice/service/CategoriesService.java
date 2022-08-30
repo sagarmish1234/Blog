@@ -48,16 +48,12 @@ public class CategoriesService {
         categoryRepository.deleteById(id);
     }
 
-//    public HashMap<Long, String> getAllCategoriesNameAndId() throws Exception {
-//        List<CategoryEntity> categories = categoryRepository.findAll();
-//        if (categories.isEmpty())
-//            throw new Exception("No categories found");
-//        HashMap<Long, String> map = new HashMap<>();
-//        for (CategoryEntity i : categories) {
-//            map.put(i.getId(), i.getName());
-//        }
-//        return map;
-//    }
+    public List<CategoryEntity> getCategoriesStartingWith(String name) throws Exception {
+        Optional<List<CategoryEntity>> categories = categoryRepository.findByNameIgnoreCaseStartingWith(name);
+        if (!categories.isPresent() || categories.get().isEmpty())
+            throw new Exception("No categories found");
+        return categories.get();
+    }
 
     public CategoryEntity updateCategoryById(Long id, String name) throws Exception {
         Optional<CategoryEntity> categoryEntity = categoryRepository.findById(id);

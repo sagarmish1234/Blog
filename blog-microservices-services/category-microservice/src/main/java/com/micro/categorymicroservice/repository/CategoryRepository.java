@@ -13,4 +13,5 @@ public interface CategoryRepository extends JpaRepository<CategoryEntity,Long> {
     Optional<List<CategoryEntity>> findByNameIgnoreCaseContaining(String name);
 
 
+    Optional<List<CategoryEntity>> findByNameIgnoreCaseStartingWith(String name);
 }

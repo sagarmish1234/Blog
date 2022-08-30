@@ -81,14 +81,24 @@ public class UserService implements UserDetailsService {
 
     public UserEntity updateUserByUsername(String username,UserEntity newUserEntity) throws Exception{
         Optional<UserEntity> userEntity = userRepository.findByEmail(username);
-        if(!userEntity.isPresent())
+        if(!userEntity.isPresent()) {
             throw new Exception("No user found");
-        if(!userEntity.get().getEmail().equals(newUserEntity.getEmail()))
+        }
+        if(!userEntity.get().getEmail().equals(newUserEntity.getEmail())) {
             throw new Exception("Not authorized to update");
+        }
         userEntity.get().setFullName(newUserEntity.getFullName());
         userEntity.get().setPassword(new BCryptPasswordEncoder().encode(newUserEntity.getPassword()));
         userEntity.get().setPhone(newUserEntity.getPhone());
         userEntity.get().setImage(newUserEntity.getImage());
+        return userEntity.get();
+
+    }
+    public List<UserEntity> loadUsersStartingWith(String name) throws Exception {
+        Optional<List<UserEntity>> userEntity = userRepository.findByFullNameIgnoreCaseStartingWith(name);
+        if(!userEntity.isPresent() || userEntity.get().isEmpty()) {
+            throw new Exception("No users found");
+        }
         return userEntity.get();
     }
 

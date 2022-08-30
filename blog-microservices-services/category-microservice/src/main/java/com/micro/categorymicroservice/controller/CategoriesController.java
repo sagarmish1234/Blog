@@ -47,18 +47,15 @@ public class CategoriesController {
             return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
         }
     }
-//    @GetMapping("/getAllNameAndId")
-//    public ResponseEntity<?> getAllNameAndId() {
-//        try {
-//            HashMap<Long, String> categoryEntities = categoriesService.getAllCategoriesNameAndId();
-//            if (categoryEntities.size() == 0)
-//                throw new Exception("No categories found");
-//            return ResponseEntity.ok(categoryEntities);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
-//        }
-//    }
+    @GetMapping("/getByStartingName/{name}")
+    public ResponseEntity<?> getByStartingName(@PathVariable String name) {
+        try {
+            List<CategoryEntity> categoryEntities = categoriesService.getCategoriesStartingWith(name);
+            return ResponseEntity.ok(categoryEntities);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
+        }
+    }
 
     @PostMapping("/add")
     public ResponseEntity<?> addCategory(@RequestBody CategoryEntity categoryEntity) {
