@@ -42,20 +42,35 @@ public class ArticleService {
         throw new Exception("No articles found");
     }
 
-    public List<ArticleEntity> loadArticlesStartingWith(String name){
-        Optional<List<ArticleEntity>> articleEntities = articleRepository.findByTitleIgnoreCaseStartingWith(name);
-        if(!articleEntities.isPresent() || articleEntities.get().isEmpty()){
-            return new ArrayList<ArticleEntity>();
+    public Boolean patternCheck(String big, String small) {
+        if (small.length() > big.length() || small.charAt(0) != big.charAt(0))
+            return false;
+        int i = 0, j = 0;
+        while (i < big.length() && j < small.length()) {
+            if (big.charAt(i) == small.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                i++;
+            }
         }
-        return articleEntities.get();
+        if (j == small.length())
+            return true;
+        return false;
+    }
+
+    public List<ArticleEntity> loadArticlesStartingWith(String name) {
+        List<ArticleEntity> articleEntities = articleRepository.findAll();
+        articleEntities = articleEntities.stream().filter(e -> patternCheck(e.getTitle().toLowerCase(), name.toLowerCase())).collect(Collectors.toList());
+        return articleEntities;
     }
 
     public List<ArticleEntity> loadArticlesByUserId(Long userId) throws Exception {
         List<ArticleEntity> articles = articleRepository.findAll();
-        if(articles.isEmpty())
+        if (articles.isEmpty())
             throw new Exception("No articles found");
-        articles = articles.stream().filter(e->e.getAuthor_id()==userId).collect(Collectors.toList());
-        if(articles.isEmpty())
+        articles = articles.stream().filter(e -> e.getAuthor_id() == userId).collect(Collectors.toList());
+        if (articles.isEmpty())
             throw new Exception("No user or articles found");
         return articles;
     }

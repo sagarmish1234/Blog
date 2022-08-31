@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -48,11 +49,29 @@ public class CategoriesService {
         categoryRepository.deleteById(id);
     }
 
+    public Boolean patternCheck(String big, String small) {
+        if (small.length() > big.length() || small.charAt(0) != big.charAt(0))
+            return false;
+        int i = 0, j = 0;
+        while (i < big.length() && j < small.length()) {
+            if (big.charAt(i) == small.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                i++;
+            }
+        }
+        if (j == small.length())
+            return true;
+        return false;
+    }
+
     public List<CategoryEntity> getCategoriesStartingWith(String name) throws Exception {
-        Optional<List<CategoryEntity>> categories = categoryRepository.findByNameIgnoreCaseStartingWith(name);
-        if (!categories.isPresent() || categories.get().isEmpty())
+        List<CategoryEntity> categories = categoryRepository.findAll();
+        categories = categories.stream().filter(e -> patternCheck(e.getName().toLowerCase(), name.toLowerCase())).collect(Collectors.toList());
+        if (categories.isEmpty())
             throw new Exception("No categories found");
-        return categories.get();
+        return categories;
     }
 
     public CategoryEntity updateCategoryById(Long id, String name) throws Exception {

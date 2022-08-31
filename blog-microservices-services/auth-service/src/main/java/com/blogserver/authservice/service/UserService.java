@@ -1,6 +1,5 @@
 package com.blogserver.authservice.service;
 
-
 import com.blogserver.authservice.entity.UserEntity;
 import com.blogserver.authservice.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -81,10 +81,10 @@ public class UserService implements UserDetailsService {
 
     public UserEntity updateUserByUsername(String username,UserEntity newUserEntity) throws Exception{
         Optional<UserEntity> userEntity = userRepository.findByEmail(username);
-        if(!userEntity.isPresent()) {
+        if (!userEntity.isPresent()) {
             throw new Exception("No user found");
         }
-        if(!userEntity.get().getEmail().equals(newUserEntity.getEmail())) {
+        if (!userEntity.get().getEmail().equals(newUserEntity.getEmail())) {
             throw new Exception("Not authorized to update");
         }
         userEntity.get().setFullName(newUserEntity.getFullName());
@@ -94,12 +94,31 @@ public class UserService implements UserDetailsService {
         return userEntity.get();
 
     }
+
+    public Boolean patternCheck(String big, String small) {
+        if (small.length() > big.length()|| small.charAt(0)!=big.charAt(0))
+            return false;
+        int i = 0, j = 0;
+        while (i < big.length() && j < small.length()) {
+            if (big.charAt(i) == small.charAt(j)) {
+                i++;
+                j++;
+            } else {
+                i++;
+            }
+        }
+        if (j == small.length())
+            return true;
+        return false;
+    }
+
     public List<UserEntity> loadUsersStartingWith(String name) throws Exception {
-        Optional<List<UserEntity>> userEntity = userRepository.findByFullNameIgnoreCaseStartingWith(name);
-        if(!userEntity.isPresent() || userEntity.get().isEmpty()) {
+        List<UserEntity> userEntity = userRepository.findAll();
+        userEntity = userEntity.stream().filter(e -> patternCheck(e.getFullName().toLowerCase(), name.toLowerCase())).collect(Collectors.toList());
+        if (userEntity.isEmpty()) {
             throw new Exception("No users found");
         }
-        return userEntity.get();
+        return userEntity;
     }
 
 }
