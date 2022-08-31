@@ -29,7 +29,7 @@ public class JwtUtil {
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
-    private Claims extractAllClaims(String token) {
+    public Claims extractAllClaims(String token) {
         return Jwts.parser().setSigningKey(SECRET_KEY).parseClaimsJws(token).getBody();
     }
 
@@ -38,7 +38,8 @@ public class JwtUtil {
     }
 
 
-    public Boolean validateToken(String token, UserEntity userDetails) {
-        return !isTokenExpired(token);
+    public void validateToken(String token) throws Exception{
+        if(isTokenExpired(token))
+            throw new Exception("Token Expired");
     }
 }
