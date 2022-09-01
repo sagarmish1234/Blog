@@ -38,6 +38,9 @@ function Login() {
     setLoading(true);
     try{
       const response = await axios.post(`${baseUrl}/user/login`, userForm);
+      // const response = await axios.get(`${baseUrl}/category/getAll`, userForm);
+
+      console.log(response)
       setShowLogin(false);
       setLoading(false);
     }
