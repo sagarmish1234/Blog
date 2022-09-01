@@ -36,15 +36,13 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
-    try{
+    try {
       const response = await axios.post(`${baseUrl}/user/login`, userForm);
-      // const response = await axios.get(`${baseUrl}/category/getAll`, userForm);
 
-      console.log(response)
+      console.log(response);
       setShowLogin(false);
       setLoading(false);
-    }
-    catch({response}) {
+    } catch ({ response }) {
       setMessage(response.data.message);
       setTheme("loginError");
       setShowError(true);
