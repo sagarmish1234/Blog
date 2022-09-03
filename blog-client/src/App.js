@@ -13,7 +13,7 @@ export const UserDetails = createContext(null);
 
 function App() {
   const [userDetials, setUserDetails] = useState(null);
-  const location = useLocation()
+  const location = useLocation();
   return (
     <>
       <UserDetails.Provider value={[userDetials, setUserDetails]}>
@@ -22,19 +22,8 @@ function App() {
           <Routes key={location.pathname} location={location}>
             <Route path="/" element={<Home />}></Route>
             <Route path="article/*" element={<Article />}></Route>
-            <Route
-              path="/login"
-              element={ 
-                <>
-                  <Home />
-                  <Login />
-                </>
-              }
-            ></Route>
-            <Route path="/register" element={<>
-                  <Home />
-                  <Signup />
-                </>}></Route>
+            <Route path="/login" element={<Login />}></Route>
+            <Route path="/register" element={<Signup />}></Route>
             <Route
               path="/categories"
               element={
