@@ -6,6 +6,7 @@ import EditorPick from "../../component/editorPick/EditorPick";
 import { motion } from "framer-motion";
 import { width } from "@mui/system";
 import { duration } from "@mui/material";
+import Categories from "../categories/Categories";
 function Home() {
   var options = {
     strings: ["<i>First</i> sentence.", "&amp; a second sentence."],
@@ -71,6 +72,7 @@ function Home() {
           That’s why the most valuable trait is persistence.
         </div>
       </motion.div>
+      <Categories />
       <EditorPick></EditorPick>
     </div>
   );

@@ -32,7 +32,7 @@ function Navbar() {
         </div>
       </div>
       <div className="navbarLinks">
-        <div className="navLink">Categories</div>
+          <div className="navLink">Categories</div>
         <div className="navLink">Write</div>
         <div
           className="navLink"
