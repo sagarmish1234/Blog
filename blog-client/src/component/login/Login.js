@@ -5,18 +5,20 @@ import Person from "@mui/icons-material/Person";
 import RemoveRedEyeSharp from "@mui/icons-material/RemoveRedEyeSharp";
 import VisibilityOffSharp from "@mui/icons-material/VisibilityOffSharp";
 import ArrowBackSharp from "@mui/icons-material/ArrowBackSharp";
-import { ShowLogin, ShowSignup } from "../../App";
+import { UserDetails } from "../../App";
 import { motion } from "framer-motion";
 import FormError from "../formError/FormError";
 import { HashLoader } from "react-spinners";
 import baseUrl from "../../config/BaseUrl";
 import axios from "axios";
+import { useLocation, useNavigate, Link } from "react-router-dom";
 
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
-  const [showLogin, setShowLogin] = useContext(ShowLogin);
-  const [showSignup, setShowSignup] = useContext(ShowSignup);
   const [showError, setShowError] = useState(false);
+  const [userDetails, setUserDetails] = useContext(UserDetails);
+  const location = useLocation();
+  const navigate = useNavigate();
   const [userForm, setUserForm] = useState({
     username: "",
     password: "",
@@ -38,9 +40,10 @@ function Login() {
     setLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/user/login`, userForm);
-
-      console.log(response);
-      setShowLogin(false);
+      sessionStorage.setItem("userDetails", JSON.stringify(response.data.user));
+      sessionStorage.setItem("token", JSON.stringify(response.data.token));
+      setUserDetails(response.data.user);
+      navigate(location.state?.from || "/")
       setLoading(false);
     } catch ({ response }) {
       setMessage(response.data.message);
@@ -57,13 +60,13 @@ function Login() {
       animate={{
         opacity: 1,
         transition: {
-          duration: 0.15,
+          duration: 0.2,
         },
       }}
       exit={{
         opacity: 0,
         transition: {
-          duration: 0.15,
+          duration: 0.2,
         },
       }}
     >
@@ -82,7 +85,7 @@ function Login() {
             <div className="loginBack">
               <ArrowBackSharp
                 style={{ fontSize: "1.7rem", cursor: "pointer" }}
-                onClick={() => setShowLogin(!showLogin)}
+                onClick={() => navigate("/")}
               ></ArrowBackSharp>
             </div>
             <div className="loginFormHeader">
@@ -136,20 +139,19 @@ function Login() {
             )}
             <div className="loginFormSignUp">
               Don't have an account?{" "}
-              <span
-                onClick={() => {
-                  setShowLogin(false);
-                  setShowSignup(true);
-                }}
-                style={{
-                  cursor: "pointer",
-                  color: "blue",
-                  fontWeight: "600",
-                  fontSize: "1.1rem",
-                }}
-              >
-                Signup
-              </span>
+              <Link to={"/register"} style={{textDecoration:"none"}}>
+                <span
+                  
+                  style={{
+                    cursor: "pointer",
+                    color: "blue",
+                    fontWeight: "600",
+                    fontSize: "1.1rem",
+                  }}
+                >
+                  Signup
+                </span>
+              </Link>
             </div>
           </form>
         )}

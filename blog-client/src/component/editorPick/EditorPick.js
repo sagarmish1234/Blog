@@ -2,24 +2,29 @@ import React, { useState } from "react";
 import "./editorPick.css";
 import SubdirectoryArrowRightSharp from "@mui/icons-material/SubdirectoryArrowRightSharp";
 import SideEditorPick from "../sideEditorPick/SideEditorPick";
+import Image from "../../assests/images/editor-pick.webp";
 
 function EditorPick() {
-  const [editorPics, setEditorPicks] = useState([{
-    image:"image",
-    title:"title",
-    story:"story"
-  },{
-    image:"image",
-    title:"title",
-    story:"story"
-  },{
-    image:"image",
-    title:"title",
-    story:"story"
-  }]);
+  const [editorPics, setEditorPicks] = useState([
+    {
+      image: Image,
+      title: "title",
+      story: "story",
+    },
+    {
+      image: Image,
+      title: "title",
+      story: "story",
+    },
+    {
+      image: Image,
+      title: "title",
+      story: "story",
+    },
+  ]);
 
   return (
-    <div className="editorcontainer">
+    <div className="editorContainer">
       <div className="editorTitle">
         Skrive's Picks
         <div className="editorExplore">
@@ -28,7 +33,7 @@ function EditorPick() {
       </div>
       <div className="editorContent">
         <div className="editorContentLeft">
-          <img src="" alt="" className="editorContentImage" />
+          <img src={Image} alt="" className="editorContentImage" />
           <div className="editorCard">
             <div className="editorCardTitle">
               <span className="editorCardCaterory">Category</span>This is a very
@@ -46,6 +51,7 @@ function EditorPick() {
               image={ele.image}
               title={ele.title}
               story={ele.story}
+              category={"Travel"}
             />
           ))}
         </div>

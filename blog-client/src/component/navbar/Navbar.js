@@ -4,10 +4,11 @@ import Image from "../../assests/images/logo.png";
 import Person from "@mui/icons-material/Person";
 import Search from "@mui/icons-material/Search";
 import { motion } from "framer-motion";
-import { ShowLogin, ShowSignup } from "../../App";
+import {UserDetails } from "../../App";
+import { Link, useNavigate } from "react-router-dom";
 function Navbar() {
-  const [showLogin, setShowLogin] = useContext(ShowLogin);
-  const [showSignup, setShowSignup] = useContext(ShowSignup);
+  const [userDetails,setUserDetails] = useContext(UserDetails);
+  const navigate = useNavigate()
   return (
     <div className="navbarContainer">
       <div className="navbarBrand">
@@ -15,7 +16,7 @@ function Navbar() {
         <div className="navbarBrandTitle">Skrive</div>
       </div>
 
-      <div className="navbarSearch">
+      {userDetails && <div className="navbarSearch">
         <motion.input
           type="text"
           placeholder="Search for articles"
@@ -30,31 +31,31 @@ function Navbar() {
         <div className="navbarSearchIcon">
           <Search></Search>
         </div>
-      </div>
+      </div>}
       <div className="navbarLinks">
           <div className="navLink">Categories</div>
+        <Link to="/categories" className="navLink" style={{textDecoration:"none"}}> Categories</Link>
         <div className="navLink">Write</div>
-        <div
+        {!userDetails && <div
           className="navLink"
           onClick={() => {
-            setShowSignup(false);
-            setShowLogin(true);
+          
+            navigate("/login");
           }}
         >
           Sign in
-        </div>
-        <div
+        </div>}
+        {!userDetails && <div
           className="navLink"
           onClick={() => {
-            setShowLogin(false);
-            setShowSignup(true);
+            navigate("/register")
           }}
         >
           Sign up
-        </div>
-        <div className="navLink">
-          <Person></Person>
-        </div>
+        </div>}
+        {userDetails && <div className="navLink" >
+          <img src={userDetails.image} alt="img" className="navbarProfile" />
+        </div>}
       </div>
     </div>
   );

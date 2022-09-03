@@ -22,6 +22,11 @@ useEffect(() => {
              <p key={category.id}>{category.name}</p>
         ))}
     </div>
+import React from 'react'
+
+function Categories() {
+  return (
+    <div>Categories</div>
   )
 }
 
