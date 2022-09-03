@@ -2,7 +2,6 @@ package com.blogserver.authservice.controller;
 
 import com.blogserver.authservice.POJO.LoginRequest;
 import com.blogserver.authservice.POJO.ResponsePOJO;
-import com.blogserver.authservice.entity.UserEntity;
 import com.blogserver.authservice.service.JwtUtil;
 import com.blogserver.authservice.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,9 @@ public class LoginController {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
             UserDetails userDetails = userService.loadUserByUsername(loginRequest.getUsername());
             String token = jwtUtil.generateToken(userDetails);
-            HashMap<String, String> obj = new HashMap<>();
+            HashMap<String, Object> obj = new HashMap<>();
             obj.put("token", token);
+            obj.put("user",userService.loadUserByEmail(loginRequest.getUsername()));
             return ResponseEntity.ok(obj);
         } catch (Exception e) {
             System.out.println(loginRequest);

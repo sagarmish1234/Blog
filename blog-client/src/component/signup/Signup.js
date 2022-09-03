@@ -9,13 +9,12 @@ import VisibilityOffSharp from "@mui/icons-material/VisibilityOffSharp";
 import PhoneInTalkSharp from "@mui/icons-material/PhoneInTalkSharp";
 import { HashLoader } from "react-spinners";
 import ArrowBackSharp from "@mui/icons-material/ArrowBackSharp";
-import { ShowSignup } from "../../App";
 import FormError from "../formError/FormError";
 import baseUrl from "../../config/BaseUrl";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
-function Signup() {
-  const [showSignup, setShowSignup] = useContext(ShowSignup);
+function Signup() { 
   const [signupUser, setSignupUser] = useState({
     fullName: "",
     email: "",
@@ -24,6 +23,7 @@ function Signup() {
     confirmPassword: "",
     phone: "",
   });
+  const navigate = useNavigate()
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -66,10 +66,14 @@ function Signup() {
     setLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/user/register`, signupUser);
+      console.log(response)
       setMessage("User registered successfully");
       setTheme("signupSuccess");
       setShowError(true)
       setLoading(false);
+      setTimeout(()=>{
+          navigate("/login")
+      },2000)
     } catch ({ response }) {
       setMessage(response.data.message);
       setTheme("signupError");
@@ -112,7 +116,7 @@ function Signup() {
           <div className="loginBack">
             <ArrowBackSharp
               style={{ fontSize: "2.3rem", cursor: "pointer" }}
-              onClick={() => setShowSignup(false)}
+              onClick={() => navigate("/")}
             ></ArrowBackSharp>
           </div>
           <div className="signupFormHeader">
