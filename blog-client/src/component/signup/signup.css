@@ -138,3 +138,11 @@
   object-position: center;
   border-right: 1px solid black;
 }
+
+.signupFormInput:has( input:focus:invalid){
+      border: 2px solid red;
+}
+
+.signupFormInput:has( input:focus:valid){
+  border: 2px solid rgba(0, 128, 0, 0.5);
+}

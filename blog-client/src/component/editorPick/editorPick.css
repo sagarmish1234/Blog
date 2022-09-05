@@ -1,5 +1,24 @@
 .editorContainer{
     width: 100%;
-    height: 100px;
-    background-color: #E9EAEC;
+    height: 800px;
+    background-color: #F4F4F4;
+    padding-top: 120px;
+}
+
+.editorTitle{
+    display: flex;
+    justify-content: space-between;
+    margin-left: 155px;
+    margin-right: 155px;
+    font-family: 'Playfair Display', serif;
+    font-size: 2.5rem;
+    align-items: baseline;
+    margin-bottom: 30px;
+}
+.editorExplore{
+    font-size: 1.2rem;
+}
+
+.editorContentImage{
+    width: 100%;
 }

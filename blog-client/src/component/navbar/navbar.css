@@ -4,7 +4,7 @@
 .navbarContainer {
   position: fixed;
   top: 0;
-  background-color: #EAEFF2;
+  background-color: white;
   margin-top: 15px;
   width: 80%;
   left: 50%;
@@ -89,7 +89,7 @@
 }
 
 .navLink:hover{
-    background-color: white;
+    background-color: #EAEFF2;
     height: 100%;
     color: black;
     height: 50%;   

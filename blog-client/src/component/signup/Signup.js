@@ -14,7 +14,7 @@ import baseUrl from "../../config/BaseUrl";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
-function Signup() { 
+function Signup() {
   const [signupUser, setSignupUser] = useState({
     fullName: "",
     email: "",
@@ -23,7 +23,7 @@ function Signup() {
     confirmPassword: "",
     phone: "",
   });
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(null);
   const [showPassword, setShowPassword] = useState(false);
@@ -66,14 +66,14 @@ function Signup() {
     setLoading(true);
     try {
       const response = await axios.post(`${baseUrl}/user/register`, signupUser);
-      console.log(response)
+      console.log(response);
       setMessage("User registered successfully");
       setTheme("signupSuccess");
-      setShowError(true)
+      setShowError(true);
       setLoading(false);
-      setTimeout(()=>{
-          navigate("/login")
-      },2000)
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch ({ response }) {
       setMessage(response.data.message);
       setTheme("signupError");
@@ -171,6 +171,8 @@ function Signup() {
                 required={true}
                 value={signupUser.email}
                 onChange={handleChange}
+                pattern="^(?!\.)[a-zA-Z0-9\.\+!#\$%&'\*-/=\?\^_`{|}~]+@[a-z]+\.[a-z]{2,}$"
+                title="Eg. abcxyz@gmail.com"
               />
               <AlternateEmailSharp></AlternateEmailSharp>
             </div>
@@ -183,6 +185,8 @@ function Signup() {
                 required={true}
                 value={signupUser.phone}
                 onChange={handleChange}
+                pattern="^[0-9]{10}$"
+                title="Should contain 10 digits"
               />
               <PhoneInTalkSharp />
             </div>
@@ -196,6 +200,8 @@ function Signup() {
                 required={true}
                 value={signupUser.password}
                 onChange={handleChange}
+                pattern="^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&-+=()])[0-9a-zA-Z@#$%^&-+=()]{8,20}$"
+                title={"Contains at least 8 characters.\nAt least one digit.\nAt least one upper case alphabet.\nAt least one lower case alphabet.\nAt least one special character.\nNo white space."}
               />
               {showPassword ? (
                 <RemoveRedEyeSharp
