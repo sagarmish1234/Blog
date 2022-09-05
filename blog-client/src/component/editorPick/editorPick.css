@@ -1,24 +1,91 @@
-.editorContainer{
-    width: 100%;
-    height: 800px;
-    background-color: #F4F4F4;
-    padding-top: 120px;
+@import url("https://fonts.googleapis.com/css2?family=Merriweather&display=swap");
+.editorContainer {
+  width: 100%;
+  height: 800px;
+  background-color: #f4f4f4;
+  padding-top: 150px;
 }
 
-.editorTitle{
-    display: flex;
-    justify-content: space-between;
-    margin-left: 155px;
-    margin-right: 155px;
-    font-family: 'Playfair Display', serif;
-    font-size: 2.5rem;
-    align-items: baseline;
-    margin-bottom: 30px;
+.editorTitle {
+  display: flex;
+  justify-content: space-between;
+  margin-left: 155px;
+  margin-right: 155px;
+  font-family: 'Cabinet Grotesk', sans-serif;
+  font-size: 2.6rem;
+  align-items: baseline;
+  margin-bottom: 20px;
+  font-weight: 500;
 }
-.editorExplore{
-    font-size: 1.2rem;
+.editorExplore {
+  font-size: 1.6rem;
+  cursor: pointer;
 }
 
-.editorContentImage{
-    width: 100%;
+.editorContent {
+  display: flex;
+  margin: auto;
+  width: 80%;
+  gap: 20px;
+  height: 100%;
+}
+.editorContentLeft {
+  flex: 11;
+  position: relative;
+  height: 100%;
+}
+
+.editorContentImage {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 68%;
+  border-radius: 10px;
+  object-fit: cover;
+  object-position: right;
+}
+
+.editorCard {
+  z-index: 1;
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  display: block;
+  background-color: #f4f4f4bc;
+  border-radius: 10px;
+  width: 62%;
+  height: 55%;
+  backdrop-filter: blur(20px);
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.editorCardTitle {
+  font-family: "Clash Display", sans-serif;
+  font-weight: 500;
+  font-size: 3.4rem;
+  cursor: pointer;
+}
+.editorCardCategory {
+  display: inline-block;
+  border: 2px solid #9a9a9a;
+  padding: 3px 15px;
+  border-radius: 20px;
+  color: #9a9a9a;
+  text-transform: uppercase;
+  font-size: 1rem;
+  font-weight: 500;
+}
+
+
+.editorCardFooter{
+    height: 20%;
+    font-family: 'Poppins';
+    color: #555555;
+    text-align: right;
+}
+.editorContentRight {
+  flex: 4;
 }

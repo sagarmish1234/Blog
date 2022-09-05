@@ -26,7 +26,7 @@ function EditorPick() {
   return (
     <div className="editorContainer">
       <div className="editorTitle">
-        Skrive's Picks
+        Trending Picks
         <div className="editorExplore">
           <SubdirectoryArrowRightSharp></SubdirectoryArrowRightSharp> Explore
         </div>
@@ -36,8 +36,7 @@ function EditorPick() {
           <img src={Image} alt="" className="editorContentImage" />
           <div className="editorCard">
             <div className="editorCardTitle">
-              <span className="editorCardCaterory">Category</span>This is a very
-              big title
+              <span className="editorCardCategory">Category</span> 4 Of The Most Luxurious Hotels in India
             </div>
             <div className="editorCardFooter">
               <div className="editorCardReadTime">3 min Read</div>

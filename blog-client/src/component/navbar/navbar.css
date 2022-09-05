@@ -6,7 +6,7 @@
   top: 0;
   background-color: white;
   margin-top: 15px;
-  width: 80%;
+  width: 85%;
   left: 50%;
   transform: translateX(-50%);
   z-index: 100;
@@ -82,7 +82,7 @@
     color: rgba(48, 48, 48, 0.755);
     display: flex;
     align-items: center;
-    font-size: .95rem;
+    font-size: 1.1rem;
     font-weight: 600;
     cursor: pointer;
     padding: 2px 11px;
