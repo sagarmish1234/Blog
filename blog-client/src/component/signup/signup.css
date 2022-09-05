@@ -143,6 +143,6 @@
       border: 2px solid red;
 }
 
-.signupFormInput:has( input:focus:valid){
+.signupFormInput:has( input:valid){
   border: 2px solid rgba(0, 128, 0, 0.5);
 }

@@ -10,22 +10,26 @@ function EditorPick() {
     {
       image: Image,
       title: "This is title 1",
-      story: "This is story 1",
+      story:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
     },
     {
       image: Image,
       title: "This is title 2",
-      story: "This is story 2",
+      story:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
     },
     {
       image: Image,
       title: "This is title 3",
-      story: "This is story 3",
+      story:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
     },
     {
       image: Image,
       title: "This is title 4",
-      story: "This is story 4",
+      story:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
     },
   ]);
 
@@ -46,7 +50,7 @@ function EditorPick() {
         }}
         viewport={{
           once: true,
-          margin: "-200px",
+          margin: "-150px",
         }}
       >
         Trending Picks
