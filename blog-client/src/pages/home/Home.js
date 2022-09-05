@@ -14,7 +14,9 @@ function Home() {
     typeSpeed: 40,
   };
 
+
   useEffect(() => {
+
     var temp = new Typed("#typewriter", {
       strings: [
         "Passion",

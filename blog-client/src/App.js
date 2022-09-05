@@ -19,7 +19,11 @@ function App() {
       <UserDetails.Provider value={[userDetials, setUserDetails]}>
         <Navbar></Navbar>
         <AnimatePresence exitBeforeEnter>
-          <Routes key={location.pathname} location={location}>
+          <Routes
+            onUpdate={() => window.scrollTo(0, 0)}
+            key={location.pathname}
+            location={location}
+          >
             <Route path="/" element={<Home />}></Route>
             <Route path="article/*" element={<Article />}></Route>
             <Route path="/login" element={<Login />}></Route>
