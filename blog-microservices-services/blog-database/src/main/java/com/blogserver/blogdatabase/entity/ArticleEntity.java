@@ -4,10 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -26,6 +23,7 @@ public class ArticleEntity {
     private String image;
 
     private Long wordCount;
+    @Column(columnDefinition = "text")
     private String story;
     private Date createdAt;
     private Date updatedAt;

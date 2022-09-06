@@ -5,7 +5,7 @@ import SideEditorPick from "../sideEditorPick/SideEditorPick";
 import Image from "../../assests/images/editor-pick.webp";
 import { motion } from "framer-motion";
 
-function EditorPick() {
+function EditorPick({data, title}) {
   const [editorPics, setEditorPicks] = useState([
     {
       image: Image,
@@ -50,10 +50,10 @@ function EditorPick() {
         }}
         viewport={{
           once: true,
-          margin: "-150px",
+          margin: "-120px",
         }}
       >
-        Trending Picks
+        {title}
         <div className="editorExplore">
           <SubdirectoryArrowRightSharp></SubdirectoryArrowRightSharp> Explore
         </div>
@@ -72,7 +72,7 @@ function EditorPick() {
         }}
         viewport={{
           once: true,
-          margin: "-320px",
+          margin: "-260px",
         }}
         className="editorContent"
       >

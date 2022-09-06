@@ -8,7 +8,7 @@ import Signup from "./component/signup/Signup";
 import { AnimatePresence } from "framer-motion";
 import Categories from "./pages/categories/Categories";
 import ProtectedRoute from "./component/protectedRoute/ProtectedRoute";
-
+import ScrollToTop from "./component/scrollToTop/ScrollToTop";
 export const UserDetails = createContext(null);
 
 function App() {

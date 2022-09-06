@@ -110,7 +110,7 @@ public class ArticleService {
             articleEntity.setCreatedAt(new Date());
             articleEntity.setViews(new HashSet<>());
             articleEntity.setCategory_id(category.getBody().getId());
-            articleEntity.setWordCount((long) articleEntity.getStory().split(" ").length);
+            articleEntity.setWordCount((long) articleEntity.getStory().split("\\s").length);
             return articleRepository.save(articleEntity);
         }
         catch(Exception e){
@@ -122,7 +122,9 @@ public class ArticleService {
         List<ArticleEntity> articles = articleRepository.findAll();
         if(articles.isEmpty())
             throw new Exception("No articles found");
-        articles = articles.stream().filter(e->e.getCategory_id()==categoryId).collect(Collectors.toList());
+//        System.out.println(articles.get(0));
+//        return articles;
+        articles = articles.stream().filter(e->e.getCategory_id().equals(categoryId)).collect(Collectors.toList());
         if(articles.isEmpty())
             throw new Exception("No articles found");
         return articles;

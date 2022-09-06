@@ -9,14 +9,7 @@ import { duration } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
 
 function Home() {
-  var options = {
-    strings: ["<i>First</i> sentence.", "&amp; a second sentence."],
-    typeSpeed: 40,
-  };
-
-
   useEffect(() => {
-
     var temp = new Typed("#typewriter", {
       strings: [
         "Passion",
@@ -31,6 +24,7 @@ function Home() {
     });
     return () => {
       clearInterval(temp);
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     };
   }, []);
 
@@ -47,7 +41,8 @@ function Home() {
           That’s why the most valuable trait is persistence.
         </div>
       </div>
-      <EditorPick></EditorPick>
+      <EditorPick title={"Trending Picks"}></EditorPick>
+      <EditorPick title={"Economics"}></EditorPick>
     </div>
   );
 }
