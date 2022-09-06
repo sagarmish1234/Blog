@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect ,useState} from "react";
 import "./home.css";
 import Image from "../../assests/images/dark-image.webp";
 import Typed from "typed.js";
@@ -7,8 +7,13 @@ import { motion } from "framer-motion";
 import { width } from "@mui/system";
 import { duration } from "@mui/material";
 import { useLocation, useNavigate } from "react-router-dom";
+import axios, {AbortController} from "axios"
+import baseUrl from "../../config/BaseUrl";
 
 function Home() {
+
+  const [data,setData] = useState(null);
+
   useEffect(() => {
     var temp = new Typed("#typewriter", {
       strings: [
@@ -24,9 +29,24 @@ function Home() {
     });
     return () => {
       clearInterval(temp);
-      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     };
   }, []);
+
+
+  const fectchApi = async ()=>{
+    const response = await axios.get(`${baseUrl}/article/getEditorPics`);
+    console.log(response)
+    setData(response.data)
+  }
+
+  useEffect(() =>  {
+    // const controller = new AbortController();
+    fectchApi()
+    return () => {
+      // controller.abort()
+    }
+  }, [])
+  
 
   return (
     <div className="homeContainer">
@@ -41,8 +61,8 @@ function Home() {
           That’s why the most valuable trait is persistence.
         </div>
       </div>
-      <EditorPick title={"Trending Picks"}></EditorPick>
-      <EditorPick title={"Economics"}></EditorPick>
+      {/* <EditorPick title={"Trending Picks"}></EditorPick> */}
+      {data && <EditorPick title={"Editor's Pick"} data={data}></EditorPick>}
     </div>
   );
 }

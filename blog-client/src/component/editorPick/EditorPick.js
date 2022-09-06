@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./editorPick.css";
 import SubdirectoryArrowRightSharp from "@mui/icons-material/SubdirectoryArrowRightSharp";
 import SideEditorPick from "../sideEditorPick/SideEditorPick";
@@ -6,32 +6,33 @@ import Image from "../../assests/images/editor-pick.webp";
 import { motion } from "framer-motion";
 
 function EditorPick({data, title}) {
-  const [editorPics, setEditorPicks] = useState([
-    {
-      image: Image,
-      title: "This is title 1",
-      story:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
-    },
-    {
-      image: Image,
-      title: "This is title 2",
-      story:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
-    },
-    {
-      image: Image,
-      title: "This is title 3",
-      story:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
-    },
-    {
-      image: Image,
-      title: "This is title 4",
-      story:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
-    },
-  ]);
+  // const [editorPics, setEditorPicks] = useState([
+  //   {
+  //     image: Image,
+  //     title: "This is title 1",
+  //     story:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
+  //   },
+  //   {
+  //     image: Image,
+  //     title: "This is title 2",
+  //     story:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
+  //   },
+  //   {
+  //     image: Image,
+  //     title: "This is title 3",
+  //     story:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
+  //   },
+  //   {
+  //     image: Image,
+  //     title: "This is title 4",
+  //     story:
+  //       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Veritatis quod quibusdam nulla possimus. Reprehenderit, aperiam. Quos provident ad odit aliquid?",
+  //   },
+  // ]);
+
 
   return (
     <div className="editorContainer">
@@ -77,11 +78,10 @@ function EditorPick({data, title}) {
         className="editorContent"
       >
         <div className="editorContentLeft">
-          <img src={Image} alt="" className="editorContentImage" />
+          <img src={data[0].image} alt="" className="editorContentImage" />
           <div className="editorCard">
             <div className="editorCardTitle">
-              <span className="editorCardCategory">Category</span> 4 Of The Most
-              Luxurious Hotels in India
+              <span className="editorCardCategory">{data[0].category}</span> {data[0].title}
             </div>
             <div className="editorCardFooter">
               <div className="editorCardReadTime">3 min Read</div>
@@ -89,13 +89,13 @@ function EditorPick({data, title}) {
           </div>
         </div>
         <div className="editorContentRight">
-          {editorPics.slice(1).map((ele, index) => (
+          {data.slice(1).map((ele, index) => (
             <SideEditorPick
               key={index}
               image={ele.image}
               title={ele.title}
               story={ele.story}
-              category={"Travel"}
+              category={ele.category}
             />
           ))}
         </div>

@@ -15,6 +15,7 @@
   display: flex ;
   align-items: center;
   justify-content: space-between;
+  border-bottom: 1px solid rgb(136, 136, 136);
 }
 
 .navbarBrand{
@@ -86,6 +87,25 @@
     font-weight: 600;
     cursor: pointer;
     padding: 2px 11px;
+}
+
+.navLink.started{
+    color: rgba(48, 48, 48, 0.755);
+    display: flex;
+    align-items: center;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    padding: 2px 11px;
+    background-color: #004A94;
+    height: 100%;
+    color: white;
+    height: 50%;   
+    border-radius: 8px; 
+}
+.navLink.started:hover{
+    background-color: #004A94; 
+    color: white;
 }
 
 .navLink:hover{

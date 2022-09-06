@@ -11,7 +11,7 @@ function Navbar() {
   const navigate = useNavigate()
   return (
     <div className="navbarContainer">
-      <div className="navbarBrand">
+      <div className="navbarBrand" onClick={()=> navigate("/")}>
         <img className="navbarBrandLogo" src={Image} />
         <div className="navbarBrandTitle">Skrive</div>
       </div>
@@ -33,7 +33,7 @@ function Navbar() {
         </div>
       </div>}
       <div className="navbarLinks">
-        <Link to="/categories" className="navLink" style={{textDecoration:"none"}}> Categories</Link>
+        <Link to="/categories" className="navLink started" style={{textDecoration:"none"}}> Get started</Link>
         <div className="navLink">Write</div>
         {!userDetails && <div
           className="navLink"
