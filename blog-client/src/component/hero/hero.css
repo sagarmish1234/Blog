@@ -1,0 +1,46 @@
+@import url('http://fonts.cdnfonts.com/css/milky-walky');
+.heroContainer{
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+    height: 660px;
+}
+.heroBackgroundImage{
+    width: 100%;
+    object-fit: cover;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    object-position: center;
+    height: 660px;
+}
+
+.heroImageOverlay{
+    position: absolute;
+    top: 0;
+    height: 660px;
+    width: 100%;
+    z-index: 2;
+    background-color: rgba(0, 0, 0, 0.675);
+}
+
+.heroTitle{
+    position: absolute;
+    z-index: 3;
+    color: white;
+    left: 200px;
+    width: max-content;
+    top: 200px;
+    font-family: 'Milky Walky', sans-serif;
+    font-size: 7rem;
+    font-weight: bold;
+}
+
+.heroPersonImage{
+    position: absolute;
+    right: 200px;
+    width: 450px;
+    height: 80%;
+    z-index: 3;
+    bottom: 105px;
+}

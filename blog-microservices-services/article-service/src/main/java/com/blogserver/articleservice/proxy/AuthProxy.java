@@ -17,4 +17,7 @@ public interface AuthProxy {
 
     @GetMapping("/user/getById/{id}")
     public ResponseEntity<UserEntity> getUserById(@PathVariable Long id);
+
+    @GetMapping("/user/getByEmail/{email}")
+    public ResponseEntity<UserEntity> getUserByEmail(@PathVariable String email);
 }

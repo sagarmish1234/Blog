@@ -23,7 +23,7 @@ public class ArticleEntity {
     private String image;
 
     private Long wordCount;
-    @Column(columnDefinition = "text")
+    @Column(columnDefinition = "LONGTEXT")
     private String story;
     private Date createdAt;
     private Date updatedAt;

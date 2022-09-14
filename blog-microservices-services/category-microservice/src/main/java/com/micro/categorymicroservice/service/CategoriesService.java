@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -81,6 +82,15 @@ public class CategoriesService {
         }
         categoryEntity.get().setName(name);
         return categoryEntity.get();
+    }
+
+    public List<Long> random3Category() throws Exception{
+        List<CategoryEntity> all = categoryRepository.findAll();
+        if(all.isEmpty())
+            throw  new Exception("No category found");
+        List<Long> categories = all.stream().map(e->e.getId()).collect(Collectors.toList());
+        Collections.shuffle(categories);
+        return categories.subList(0,4);
     }
 
 }

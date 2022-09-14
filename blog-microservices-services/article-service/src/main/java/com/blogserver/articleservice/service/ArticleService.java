@@ -1,5 +1,7 @@
 package com.blogserver.articleservice.service;
 
+import com.blogserver.articleservice.POJO.ArticleResponse;
+import com.blogserver.articleservice.POJO.ArticleUserResponse;
 import com.blogserver.articleservice.entity.ArticleEntity;
 import com.blogserver.articleservice.entity.CategoryEntity;
 import com.blogserver.articleservice.entity.UserEntity;
@@ -130,12 +132,54 @@ public class ArticleService {
         return articles;
     }
 
-    public List<ArticleEntity> loadEditorPicks() throws Exception{
+    public List<ArticleEntity> loadEditorPicks() throws Exception {
         List<ArticleEntity> pics = articleRepository.findAll();
-        if(!pics.isEmpty()){
+        if (!pics.isEmpty()) {
             Collections.shuffle(pics);
-            return pics.subList(0,4);
+            return pics.subList(0, 4);
         }
         throw new Exception("No articles found");
+    }
+
+    public List<ArticleResponse> convertToArticleResponse(List<ArticleEntity> articles) {
+        List<ArticleResponse> ans = new ArrayList<>();
+        for (ArticleEntity ar : articles) {
+            ArticleResponse articleResponse = new ArticleResponse();
+            articleResponse.setId(ar.getId());
+            articleResponse.setTitle(ar.getTitle());
+            articleResponse.setImage(ar.getImage());
+            articleResponse.setStory(ar.getStory());
+            articleResponse.setWordCount(ar.getWordCount());
+            UserEntity userById = authProxy.getUserById(ar.getAuthor_id()).getBody();
+            articleResponse.setAuthor(new ArticleUserResponse(userById.getEmail(), userById.getFullName(), userById.getImage()));
+            CategoryEntity byId = categoryProxy.getById(ar.getCategory_id()).getBody();
+            articleResponse.setCategory(byId.getName());
+            articleResponse.setCreatedAt(ar.getCreatedAt());
+            ans.add(articleResponse);
+        }
+        return ans;
+    }
+
+    public List<ArticleEntity> trendingPosts() throws Exception {
+        List<ArticleEntity> articleEntities = articleRepository.findAll();
+        if (articleEntities.isEmpty())
+            throw new Exception("Articles not found");
+        Collections.sort(articleEntities, (a, b) -> a.getViews().size() - b.getViews().size());
+        return articleEntities.subList(0, 6);
+    }
+
+    public ArticleResponse convertToArticleResponse(ArticleEntity ar) {
+        ArticleResponse articleResponse = new ArticleResponse();
+        articleResponse.setId(ar.getId());
+        articleResponse.setTitle(ar.getTitle());
+        articleResponse.setImage(ar.getImage());
+        articleResponse.setStory(ar.getStory());
+        articleResponse.setWordCount(ar.getWordCount());
+        UserEntity userById = authProxy.getUserById(ar.getAuthor_id()).getBody();
+        articleResponse.setAuthor(new ArticleUserResponse(userById.getEmail(), userById.getFullName(), userById.getImage()));
+        CategoryEntity byId = categoryProxy.getById(ar.getCategory_id()).getBody();
+        articleResponse.setCategory(byId.getName());
+        articleResponse.setCreatedAt(ar.getCreatedAt());
+        return articleResponse;
     }
 }

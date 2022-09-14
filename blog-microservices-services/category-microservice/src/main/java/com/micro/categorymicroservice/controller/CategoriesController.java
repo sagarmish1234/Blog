@@ -87,4 +87,14 @@ public class CategoriesController {
         }
     }
 
+    @GetMapping("/randomThreeCategory")
+    public ResponseEntity<?> randomThreeCategory(){
+        try{
+            List<Long> random3Category = categoriesService.random3Category();
+            return ResponseEntity.ok(random3Category);
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
+        }
+    }
+
 }

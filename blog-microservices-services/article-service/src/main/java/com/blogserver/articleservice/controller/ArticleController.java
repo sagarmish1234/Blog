@@ -35,7 +35,7 @@ public class ArticleController {
         HashMap<String, Object> m = new HashMap<>();
         m.put("categories", categories.getBody().subList(categoriesSize, categoriesSize + Math.min(10, categories.getBody().size())));
         m.put("users", users.getBody().subList(usersSize, usersSize + Math.min(10, users.getBody().size())));
-        m.put("articles", articleEntities.subList(articlesSize, articlesSize + Math.min(10, articleEntities.size())));
+        m.put("articles", articleService.convertToArticleResponse(articleEntities.subList(articlesSize, articlesSize + Math.min(10, articleEntities.size()))));
         return ResponseEntity.ok(m);
     }
 
@@ -43,7 +43,7 @@ public class ArticleController {
     public ResponseEntity<?> getById(@PathVariable Long id) {
         try {
             ArticleEntity articleEntity = articleService.loadArticleById(id);
-            return ResponseEntity.ok(articleEntity);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(articleEntity));
         } catch (Exception e) {
             return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
         }
@@ -53,7 +53,7 @@ public class ArticleController {
     public ResponseEntity<?> getByTitle(@PathVariable String title) {
         try {
             List<ArticleEntity> articleEntity = articleService.loadArticleByTitle(title);
-            return ResponseEntity.ok(articleEntity);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(articleEntity));
         } catch (Exception e) {
             return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
         }
@@ -63,7 +63,7 @@ public class ArticleController {
     public ResponseEntity<?> getByUserId(@PathVariable Long userId) {
         try {
             List<ArticleEntity> articleEntity = articleService.loadArticlesByUserId(userId);
-            return ResponseEntity.ok(articleEntity);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(articleEntity));
         } catch (Exception e) {
             return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
         }
@@ -73,7 +73,7 @@ public class ArticleController {
     public ResponseEntity<?> addArticle(@RequestBody ArticleEntity articleEntity, @PathVariable Long userId, @PathVariable Long categoryId) {
         try {
             ArticleEntity article = articleService.saveArticleByUserIdAndCategoryId(articleEntity, userId, categoryId);
-            return ResponseEntity.ok(article);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(article));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
@@ -85,7 +85,7 @@ public class ArticleController {
             ArticleEntity oldArticle = articleService.loadArticleById(id);
             if (userId != oldArticle.getAuthor_id())
                 throw new Exception("You are not authorized to update this article");
-            return ResponseEntity.ok(articleService.updateArticleById(id, newArticleEntity));
+            return ResponseEntity.ok(articleService.convertToArticleResponse(articleService.updateArticleById(id, newArticleEntity)));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
@@ -95,7 +95,7 @@ public class ArticleController {
     public ResponseEntity<?> updateArticleViews(@PathVariable Long userId, @PathVariable Long id) {
         try {
             ArticleEntity article = articleService.updateArticleViewsById(userId, id);
-            return ResponseEntity.ok(article);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(article));
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
         }
@@ -105,7 +105,7 @@ public class ArticleController {
     public ResponseEntity<?> getArticlesByCategoryId(@PathVariable Long categoryId) {
         try {
             List<ArticleEntity> articles = articleService.loadArticlesByCategoryId(categoryId);
-            return ResponseEntity.ok(articles);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(articles));
 
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(new ResponsePOJO(e.getMessage()));
@@ -116,7 +116,22 @@ public class ArticleController {
     public ResponseEntity<?> getEditorPics() {
         try {
             List<ArticleEntity> articleEntities = articleService.loadEditorPicks();
-            return ResponseEntity.ok(articleEntities);
+            return ResponseEntity.ok(articleService.convertToArticleResponse(articleEntities));
+        } catch (Exception e) {
+            return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
+        }
+    }
+
+    @GetMapping("/homePage")
+    public ResponseEntity<?> getHomePageArticles(){
+        try{
+            List<ArticleEntity> articleEntities = articleService.trendingPosts();
+            List<ArticleEntity> loadEditorPicks = articleService.loadEditorPicks();
+            HashMap<String,Object> m = new HashMap<>();
+            m.put("trending",articleService.convertToArticleResponse(articleEntities));
+            m.put("editorPick",articleService.convertToArticleResponse(loadEditorPicks));
+            return ResponseEntity.ok(m);
+
         } catch (Exception e) {
             return ResponseEntity.status(404).body(new ResponsePOJO(e.getMessage()));
         }
