@@ -1,0 +1,22 @@
+.trendingContainer{
+    width: 100%;
+    margin: 100px;
+    margin-top: 50px
+}
+
+.trendingContainerTitle{
+    font-size: 1rem;
+    text-transform: uppercase;
+    font-family:Arial, Helvetica, sans-serif;
+    font-weight: 600;
+}
+
+.trendingIcon{
+    font-size: 1.5rem;
+    margin-right: 15px;
+}
+
+.trendingPostsContainer{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}

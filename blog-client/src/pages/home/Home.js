@@ -29,7 +29,7 @@ function Home() {
   return (
     <div className="homeContainer">
       <Hero></Hero>
-      {/* <Trending></Trending> */}
+      <Trending></Trending>
       {/* {data && <EditorPick title={"Editor's Pick"} data={data}></EditorPick>} */}
     </div>
   );
